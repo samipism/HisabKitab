@@ -9,3 +9,7 @@ class FormdataAddition extends FormdataEvent {
   final Data datum;
   const FormdataAddition(this.datum);
 }
+
+class FormdataTotal extends FormdataEvent {
+  List<Object> get props => [];
+}

@@ -9,6 +9,7 @@ part 'formdata_state.dart';
 
 class FormdataBloc extends Bloc<FormdataEvent, FormdataState> {
   List<Data> data = [];
+  int total;
   @override
   FormdataState get initialState => FormdataInitial();
 
@@ -17,8 +18,13 @@ class FormdataBloc extends Bloc<FormdataEvent, FormdataState> {
     FormdataEvent event,
   ) async* {
     if (event is FormdataAddition) {
-      data.add(event.datum);
-      yield FormdataSuccess(data);
+      data.insert(0, event.datum);
+      print(data);
+      total = data
+          .map((datum) => (datum.income + (0 - datum.expenditure)))
+          .toList()
+          .fold(0, (previousValue, element) => previousValue + element);
+      yield FormdataSuccess([...data], total);
     }
   }
 }

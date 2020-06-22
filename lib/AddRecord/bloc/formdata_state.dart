@@ -16,12 +16,18 @@ class FormdataLoading extends FormdataState {
 
 class FormdataSuccess extends FormdataState {
   final List<Data> data;
+  final int total;
   @override
   List<Object> get props => [data];
-  FormdataSuccess(this.data);
+  FormdataSuccess(this.data, this.total);
 }
 
 class FormdataError extends FormdataState {
+  @override
+  List<Object> get props => [];
+}
+
+class FormdataEmpty extends FormdataState {
   @override
   List<Object> get props => [];
 }

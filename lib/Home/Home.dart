@@ -6,9 +6,11 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                    top: Radius.zero, bottom: Radius.circular(20))),
             title: Text("Hisab"),
-            centerTitle: true,
-            backgroundColor: Colors.red[600]),
+            centerTitle: true),
         body: Column(
           children: <Widget>[
             TotalData(),
@@ -22,13 +24,13 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.red[600],
-          child: Text('click'),
+          child: Icon(Icons.add),
           onPressed: () {
-            print("You Clicked me!!!");
+            Navigator.pushNamed(context, "/addrecord");
           },
         ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
