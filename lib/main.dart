@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myproject/AddRecord/bloc/formdata_bloc.dart';
 import 'package:myproject/AddRecord/recordAdd.dart';
 import 'package:myproject/Home/Home.dart';
+import 'package:myproject/core/Settings.dart';
 import 'package:myproject/Theme.dart';
 import 'package:myproject/bloc/tags_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ void main() => runApp(MultiBlocProvider(
           initialRoute: "/",
           routes: {
             "/": (context) => Home(),
-            "/addrecord": (context) => AddRecord()
+            "/addrecord": (context) => AddRecord(),
+            "/settings": (context) => Settings()
           },
         )));

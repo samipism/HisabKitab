@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myproject/AddRecord/bloc/formdata_bloc.dart';
 import 'package:myproject/AddRecord/data.dart';
+import 'package:myproject/AddRecord/bloc/formdata_bloc.dart';
 import 'package:myproject/bloc/tags_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +21,7 @@ class _ExpenditureState extends State<Expenditure> {
 
   TextEditingController _desc = TextEditingController();
   TextEditingController _amount = TextEditingController();
+  TextEditingController _friends = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,8 @@ class _ExpenditureState extends State<Expenditure> {
           BlocBuilder<TagsBloc, TagsState>(
             builder: (context, state) {
               if (state is TagsStateSuccess) {
-                return DropdownButton(
+                return DropdownButtonFormField(
+                    isExpanded: true,
                     value: tag,
                     items: state.tags
                         .map((e) => DropdownMenuItem<String>(
@@ -57,6 +59,7 @@ class _ExpenditureState extends State<Expenditure> {
                     });
               } else if (state is TagsInitial) {
                 return DropdownButton(
+                    isExpanded: true,
                     value: tag,
                     items: state.tags
                         .map((e) => DropdownMenuItem<String>(
@@ -86,15 +89,24 @@ class _ExpenditureState extends State<Expenditure> {
               labelText: "Amount",
             ),
           ),
+          TextFormField(
+            controller: _friends,
+            decoration: InputDecoration(
+              labelText: "Friends",
+            ),
+          ),
           RaisedButton(
             onPressed: () {
               BlocProvider.of<FormdataBloc>(context).add(FormdataAddition(Data(
+                  description: _desc.text,
+                  tags: tag,
                   income: 0,
                   expenditure: int.parse(_amount.text),
-                  friends: _desc.text,
+                  friends: _friends.text,
                   dateTime: entryDate)));
               _desc.clear();
               _amount.clear();
+              _friends.clear();
 
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text("Form Submitted Successfully.")));

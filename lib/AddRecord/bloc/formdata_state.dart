@@ -16,10 +16,11 @@ class FormdataLoading extends FormdataState {
 
 class FormdataSuccess extends FormdataState {
   final List<Data> data;
-  final int total;
+  final num income, expenditure;
+  final String currency;
   @override
-  List<Object> get props => [data];
-  FormdataSuccess(this.data, this.total);
+  List<Object> get props => [data, income, expenditure, currency];
+  FormdataSuccess(this.data, this.income, this.expenditure, this.currency);
 }
 
 class FormdataError extends FormdataState {

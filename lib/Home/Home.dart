@@ -6,6 +6,13 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/settings");
+                  }),
+            ],
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
                     top: Radius.zero, bottom: Radius.circular(20))),

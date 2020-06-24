@@ -25,6 +25,7 @@ class _IncomeState extends State<Income> {
 
   TextEditingController _desc = TextEditingController();
   TextEditingController _amount = TextEditingController();
+  TextEditingController _friends = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class _IncomeState extends State<Income> {
             builder: (context, state) {
               if (state is TagsStateSuccess) {
                 return DropdownButton(
+                    isExpanded: true,
                     value: tag,
                     items: state.tags
                         .map((e) => DropdownMenuItem<String>(
@@ -61,6 +63,7 @@ class _IncomeState extends State<Income> {
                     });
               } else if (state is TagsInitial) {
                 return DropdownButton(
+                    isExpanded: true,
                     value: tag,
                     items: state.tags
                         .map((e) => DropdownMenuItem<String>(
@@ -90,15 +93,24 @@ class _IncomeState extends State<Income> {
               labelText: "Amount",
             ),
           ),
+          TextFormField(
+            controller: _friends,
+            decoration: InputDecoration(
+              labelText: "Friends",
+            ),
+          ),
           RaisedButton(
             onPressed: () {
               BlocProvider.of<FormdataBloc>(context).add(FormdataAddition(Data(
+                  description: _desc.text,
+                  tags: tag,
                   income: int.parse(_amount.text),
                   expenditure: 0,
-                  friends: _desc.text,
+                  friends: _friends.text,
                   dateTime: entryDate)));
               _desc.clear();
               _amount.clear();
+              _friends.clear();
 
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text("Form Submitted Successfully.")));

@@ -14,7 +14,8 @@ class TotalData extends StatelessWidget {
             return Column(
               children: <Widget>[
                 Card(
-                  child: Text("You have : रू. ${state.total}"),
+                  child: Text(
+                      "You have : ${state.currency} ${state.income - state.expenditure}"),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -32,7 +33,7 @@ class TotalData extends StatelessWidget {
                           ),
                           subtitle: Text("${state.data[index].friends}"),
                           title: Text(
-                              " रू. ${state.data[index].expenditure == 0 ? state.data[index].income : state.data[index].expenditure}"),
+                              " ${state.currency} ${state.data[index].expenditure == 0 ? state.data[index].income : state.data[index].expenditure}"),
                           trailing: Text(
                               "${date_format.format(state.data[index].dateTime)}"),
                         ),
