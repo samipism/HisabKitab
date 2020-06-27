@@ -13,3 +13,13 @@ class FormdataAddition extends FormdataEvent {
 class FormdataTotal extends FormdataEvent {
   List<Object> get props => [];
 }
+
+class GetAllFormdata extends FormdataEvent {
+  List<Object> get props => [];
+}
+
+class FormdataDeletion extends FormdataEvent {
+  List<Object> get props => [];
+  final Data datum;
+  const FormdataDeletion(this.datum);
+}

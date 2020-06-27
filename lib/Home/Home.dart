@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:myproject/Home/Friends.dart';
+import 'package:myproject/Home/Stats.dart';
 import 'package:myproject/Home/TotalData.dart';
+import 'package:myproject/Home/User.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _index = 0;
+  List<Widget> _children = [TotalData(), Stats(), Friends(), User()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,18 +29,7 @@ class Home extends StatelessWidget {
                     top: Radius.zero, bottom: Radius.circular(20))),
             title: Text("Hisab"),
             centerTitle: true),
-        body: Column(
-          children: <Widget>[
-            TotalData(),
-            Row(
-              children: <Widget>[],
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-            ),
-          ],
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-        ),
+        body: _children[_index],
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
@@ -37,6 +37,12 @@ class Home extends StatelessWidget {
           },
         ),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _index,
+          onTap: (value) {
+            setState(() {
+              _index = value;
+            });
+          },
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
