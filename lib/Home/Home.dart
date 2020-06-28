@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myproject/Home/Friends.dart';
-import 'package:myproject/Home/Stats.dart';
+import 'package:myproject/Friends/Friends.dart';
+import 'package:myproject/Stats/Stats.dart';
 import 'package:myproject/Home/TotalData.dart';
 import 'package:myproject/Home/User.dart';
+import 'package:myproject/core/Database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,6 +13,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _index = 0;
   List<Widget> _children = [TotalData(), Stats(), Friends(), User()];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myproject/AddRecord/bloc/formdata_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:myproject/core/Permission.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:myproject/AddRecord/bloc/specificformdata_bloc.dart';
+import 'package:myproject/Home/DataList.dart';
 
 class TotalData extends StatefulWidget {
   @override
@@ -16,67 +18,128 @@ class _TotalDataState extends State<TotalData> {
   void initState() {
     super.initState();
     BlocProvider.of<FormdataBloc>(context).add(GetAllFormdata());
-    HandlePermission.permission
-        .isContactPermitted()
-        .then((value) => print(value));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FormdataBloc, FormdataState>(
-      builder: (context, state) {
-        if (state is FormdataSuccess) {
-          return Column(
-            children: <Widget>[
-              Card(
-                child: Text(
-                    "You have : ${state.currency} ${state.income - state.expenditure}"),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Dismissible(
-                      key: UniqueKey(),
-                      background: Container(
-                        color: Colors.red,
-                      ),
-                      direction: DismissDirection.startToEnd,
-                      onDismissed: (direction) {
-                        BlocProvider.of<FormdataBloc>(context)
-                            .add(FormdataDeletion(state.data[index]));
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text("Transaction dismissed")));
-                      },
-                      child: Card(
-                        child: ListTile(
-                          leading: Icon(
-                            state.data[index].expenditure == 0
-                                ? Icons.arrow_upward
-                                : Icons.arrow_downward,
-                            color: state.data[index].expenditure == 0
-                                ? Colors.green
-                                : Colors.red,
-                          ),
-                          subtitle: Text("${state.data[index].friends}"),
-                          title: Text(
-                              " ${state.currency} ${state.data[index].expenditure == 0 ? state.data[index].income : state.data[index].expenditure}"),
-                          trailing: Text(
-                              "${date_format.format(state.data[index].dateTime)}"),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          child: BlocBuilder<FormdataBloc, FormdataState>(
+            builder: (context, state) {
+              if (state is FormdataSuccess) {
+                return Column(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_balance_wallet,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 50,
                         ),
+                        Text(
+                            "${state.currency} ${state.income - state.expenditure}"),
+                      ],
+                    ),
+                    DataList(
+                        date_format: date_format,
+                        data: state.data,
+                        currency: state.currency,
+                        expenditure: state.expenditure,
+                        income: state.income),
+                  ],
+                );
+              } else if (state is FormdataEmpty) {
+                return Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  child: Center(
+                    child: Text("No Transaction Occured Till Now."),
+                  ),
+                );
+              } else {
+                return Center(
+                  child: SpinKitWave(
+                    size: 50,
+                    color: Colors.blue,
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+        Expanded(
+          child: BlocBuilder<SpecificformdataBloc, SpecificformdataState>(
+            builder: (context, state) {
+              print("$state");
+              if (state is SpecificformdataSuccess) {
+                return Column(
+                  children: <Widget>[
+                    Container(
+                      // color: Theme.of(context).colorScheme.secondary,
+                      // shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(10),
+                      //         topRight: Radius.circular(10))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Card(
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.arrow_upward,
+                                  color: Colors.green,
+                                  size: 30,
+                                ),
+                                Text("${state.currency} ${state.income} "),
+                              ],
+                            ),
+                          ),
+                          Text("Today:"),
+                          Card(
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.arrow_downward,
+                                  color: Colors.red,
+                                  size: 30,
+                                ),
+                                Text("${state.currency} ${state.expenditure}"),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    );
-                  },
-                  itemCount: state.data.length,
-                ),
-              ),
-            ],
-          );
-          // return Text("Empty");
-        } else {
-          return Text("Empty");
-        }
-      },
+                    ),
+                    DataList(
+                        date_format: date_format,
+                        data: state.data,
+                        currency: state.currency,
+                        expenditure: state.expenditure,
+                        income: state.income),
+                  ],
+                );
+              } else if (state is SpecificformdataEmpty) {
+                return Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  child: Center(
+                    child: Text("No Transaction Occured Today."),
+                  ),
+                );
+              } else
+                return Center(
+                  child: SpinKitWave(
+                    size: 50,
+                    color: Colors.blue,
+                  ),
+                );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

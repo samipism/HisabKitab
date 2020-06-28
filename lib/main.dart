@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myproject/AddRecord/bloc/formdata_bloc.dart';
+import 'package:myproject/AddRecord/bloc/specificformdata_bloc.dart';
 import 'package:myproject/AddRecord/recordAdd.dart';
+import 'package:myproject/Friends/bloc/friends_bloc.dart';
 import 'package:myproject/Home/Home.dart';
 import 'package:myproject/core/Settings.dart';
 import 'package:myproject/Theme.dart';
@@ -14,6 +16,13 @@ void main() => runApp(MultiBlocProvider(
           ),
           BlocProvider(
             create: (context) => FormdataBloc(),
+          ),
+          BlocProvider(
+            create: (context) =>
+                SpecificformdataBloc(BlocProvider.of<FormdataBloc>(context)),
+          ),
+          BlocProvider(
+            create: (context) => FriendsBloc(),
           ),
         ],
         child: MaterialApp(

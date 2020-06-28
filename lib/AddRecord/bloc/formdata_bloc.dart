@@ -18,6 +18,20 @@ class FormdataBloc extends Bloc<FormdataEvent, FormdataState> {
     return _shared.getString("Country") ?? "Nepal:NPR";
   }
 
+  num calulateIncome(List<Data> data) {
+    return data
+        .map((datum) => (datum.income))
+        .toList()
+        .fold(0, (previousValue, element) => previousValue + element);
+  }
+
+  num calulateExpenditure(List<Data> data) {
+    return data
+        .map((datum) => (datum.expenditure))
+        .toList()
+        .fold(0, (previousValue, element) => previousValue + element);
+  }
+
   @override
   FormdataState get initialState => FormdataInitial();
 
@@ -29,46 +43,39 @@ class FormdataBloc extends Bloc<FormdataEvent, FormdataState> {
       yield FormdataLoading();
       curr = await _currencyFind();
       await DatabaseProvider.db.insertData(event.datum);
+      print("Datebase Information");
       data.insert(0, event.datum);
       // print(data);
-      income = data
-          .map((datum) => (datum.income))
-          .toList()
-          .fold(0, (previousValue, element) => previousValue + element);
-      expenditure = data
-          .map((datum) => (datum.expenditure))
-          .toList()
-          .fold(0, (previousValue, element) => previousValue + element);
+      income = calulateIncome(data);
+      expenditure = calulateExpenditure(data);
       yield FormdataSuccess([...data], income, expenditure, curr.split(":")[1]);
     } else if (event is GetAllFormdata) {
       yield FormdataLoading();
       curr = await _currencyFind();
       data = await DatabaseProvider.db.getRecords() ?? [];
-      income = data
-          .map((datum) => (datum.income))
-          .toList()
-          .fold(0, (previousValue, element) => previousValue + element);
-      expenditure = data
-          .map((datum) => (datum.expenditure))
-          .toList()
-          .fold(0, (previousValue, element) => previousValue + element);
-      yield FormdataSuccess([...data], income, expenditure, curr.split(":")[1]);
+
+      income = calulateIncome(data);
+      expenditure = calulateExpenditure(data);
+      if (data.length != 0) {
+        yield FormdataSuccess(
+            [...data], income, expenditure, curr.split(":")[1]);
+      } else {
+        yield FormdataEmpty();
+      }
     } else if (event is FormdataDeletion) {
       curr = await _currencyFind();
       if (await DatabaseProvider.db.deleteData(event.datum.id) == 0)
         yield FormdataError();
       else {
         data = await DatabaseProvider.db.getRecords() ?? [];
-        income = data
-            .map((datum) => (datum.income))
-            .toList()
-            .fold(0, (previousValue, element) => previousValue + element);
-        expenditure = data
-            .map((datum) => (datum.expenditure))
-            .toList()
-            .fold(0, (previousValue, element) => previousValue + element);
-        yield FormdataSuccess(
-            [...data], income, expenditure, curr.split(":")[1]);
+        income = calulateIncome(data);
+        expenditure = calulateExpenditure(data);
+        if (data.length != 0) {
+          yield FormdataSuccess(
+              [...data], income, expenditure, curr.split(":")[1]);
+        } else {
+          yield FormdataEmpty();
+        }
       }
     }
   }

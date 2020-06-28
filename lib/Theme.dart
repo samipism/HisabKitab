@@ -12,7 +12,7 @@ class BasicTheme {
   static Color _backGround = Color(0xffffffff);
   static Color _onBackGround = Color(0xff000000);
   static Brightness _brightnessLight = Brightness.light;
-  static Color _surface = Color(0xfffafafa);
+  static Color _surface = Color(0xffdce6e5);
 
   static TextTheme _textTheme = TextTheme(
     headline1: TextStyle(fontFamily: "Oxygen"),

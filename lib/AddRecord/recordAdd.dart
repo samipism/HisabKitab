@@ -8,6 +8,7 @@ class AddRecord extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text("Add Records"),
