@@ -17,33 +17,6 @@ class _FriendsState extends State<Friends> {
 
   @override
   Widget build(BuildContext context) {
-    // return Column(
-    //   children: <Widget>[
-    //     Expanded(
-    //         child: FutureBuilder(
-    //             initialData: ["I guess you must wait"],
-    //             future: _contacts,
-    //             builder: (context, snapShot) {
-    //               if (snapShot.hasError) {
-    //                 return Text(
-    //                     "An Error Occured. May be due to Lack of Permission");
-    //               } else {
-    //                 return ListView.builder(
-    //                   physics: BouncingScrollPhysics(),
-    //                   itemCount: snapShot.data.length,
-    //                   itemBuilder: (context, index) {
-    //                     return Card(
-    //                       child: ListTile(
-    //                         title: Text("${snapShot.data[index]}"),
-    //                       ),
-    //                     );
-    //                   },
-    //                 );
-    //               }
-    //             }))
-    //   ],
-    // );
-
     return BlocBuilder<FriendsBloc, FriendsState>(
       builder: (context, state) {
         return Column(
@@ -61,11 +34,11 @@ class _FriendsState extends State<Friends> {
                           subtitle: Row(
                             children: <Widget>[
                               Icon(
-                                state.data[index].income >
+                                state.data[index].income <
                                         state.data[index].expenditure
                                     ? Icons.arrow_upward
                                     : Icons.arrow_downward,
-                                color: state.data[index].income >
+                                color: state.data[index].income <
                                         state.data[index].expenditure
                                     ? Colors.green
                                     : Colors.red,
@@ -73,7 +46,7 @@ class _FriendsState extends State<Friends> {
                               Text(
                                 "${state.data[index].income > state.data[index].expenditure ? state.data[index].income - state.data[index].expenditure : state.data[index].expenditure - state.data[index].income}",
                                 style: TextStyle(
-                                  color: state.data[index].income >
+                                  color: state.data[index].income <
                                           state.data[index].expenditure
                                       ? Colors.green
                                       : Colors.red,

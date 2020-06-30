@@ -73,7 +73,6 @@ class _TotalDataState extends State<TotalData> {
         Expanded(
           child: BlocBuilder<SpecificformdataBloc, SpecificformdataState>(
             builder: (context, state) {
-              print("$state");
               if (state is SpecificformdataSuccess) {
                 return Column(
                   children: <Widget>[

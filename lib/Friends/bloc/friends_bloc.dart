@@ -28,6 +28,10 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
       yield FriendsLoading();
       curr = curr = await _currencyFind();
       data = await DatabaseProvider.db.getFriendsRecords() ?? [];
+      data = data
+          .where((element) =>
+              element.name != null && element.income != element.expenditure)
+          .toList();
       yield (FriendsSuccess([...data]));
     }
   }
