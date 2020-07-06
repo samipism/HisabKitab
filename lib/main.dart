@@ -4,6 +4,7 @@ import 'package:myproject/AddRecord/bloc/specificformdata_bloc.dart';
 import 'package:myproject/AddRecord/recordAdd.dart';
 import 'package:myproject/Friends/bloc/friends_bloc.dart';
 import 'package:myproject/Home/Home.dart';
+import 'package:myproject/Introduction/Introduction.dart';
 import 'package:myproject/core/Settings.dart';
 import 'package:myproject/Theme.dart';
 import 'package:myproject/bloc/tags_bloc.dart';
@@ -28,8 +29,9 @@ void main() => runApp(MultiBlocProvider(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: BasicTheme.mainTheme,
-          initialRoute: "/",
+          initialRoute: "/intro",
           routes: {
+            "/intro": (context) => Introduction(),
             "/": (context) => Home(),
             "/addrecord": (context) => AddRecord(),
             "/settings": (context) => Settings()

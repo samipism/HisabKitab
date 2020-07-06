@@ -130,7 +130,7 @@ class _TotalDataState extends State<TotalData> {
                 );
               } else
                 return Center(
-                  child: SpinKitWave(
+                  child: SpinKitRing(
                     size: 50,
                     color: Colors.blue,
                   ),

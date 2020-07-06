@@ -22,7 +22,7 @@ class _FormInputState extends State<FormInput> {
   void initState() {
     super.initState();
     entryDate = DateTime.now();
-    tag = "Selection";
+    tag = "Food";
     _contacts = ContactsManager().getContacts();
   }
 

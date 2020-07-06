@@ -4,7 +4,8 @@ import 'package:myproject/AddRecord/Income.dart';
 import 'package:myproject/Friends/Friends.dart';
 import 'package:myproject/Stats/Stats.dart';
 import 'package:myproject/Home/TotalData.dart';
-import 'package:myproject/Home/User.dart';
+import 'package:myproject/User/User.dart';
+import 'package:myproject/User/UserInfo.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,11 +14,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _index = 0;
-  List<Widget> _children = [TotalData(), Stats(), Friends(), User()];
+  List<Widget> _children = [TotalData(), Stats(), Friends(), UserInfo()];
   bool _showButton = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

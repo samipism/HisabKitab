@@ -7,7 +7,17 @@ part 'tags_event.dart';
 part 'tags_state.dart';
 
 class TagsBloc extends Bloc<TagsEvent, TagsState> {
-  List<String> tags = ["Home", "College", "Selection"];
+  List<String> tags = [
+    "House-hold",
+    "Food",
+    "Education",
+    "Grocery",
+    "Personal",
+    "Utilities",
+    "Medical",
+    "Fuel",
+    "Entertainment",
+  ];
   @override
   TagsState get initialState => TagsInitial([...tags]);
 

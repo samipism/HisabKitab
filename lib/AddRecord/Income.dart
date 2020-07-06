@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myproject/core/Forms.dart';
+import 'package:myproject/AddRecord/Forms.dart';
 
 class Income extends StatefulWidget {
   const Income({

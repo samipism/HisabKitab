@@ -58,7 +58,6 @@ class SpecificformdataBloc
               element.dateTime.toString().split(" ")[0] ==
               event.date.toString().split(" ")[0])
           .toList();
-      print("I am here. $data");
       income = calulateIncome(data);
       expenditure = calulateExpenditure(data);
       if (data.length != 0) {
